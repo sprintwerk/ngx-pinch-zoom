@@ -1,6 +1,6 @@
 # Note
 
-This Project has been forked to update to the newest Angular 18 Version.
+This Project has been forked to update to the newest Angular 19 Version.
 
 # Pinch zoom for Angular
 
@@ -23,10 +23,10 @@ npm i @meddv/ngx-pinch-zoom
 Import module:
 
 ```ts
-import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
+import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
 
 @NgModule({
-    imports: [ PinchZoomModule ]
+    imports: [ PinchZoomComponent ]
 })
 ```
 

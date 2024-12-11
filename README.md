@@ -20,10 +20,10 @@ npm i @meddv/ngx-pinch-zoom
 Import module:
 
 ```ts
-import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
+import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
 
 @NgModule({
-    imports: [ PinchZoomModule ]
+    imports: [ PinchZoomComponent ]
 })
 ```
 

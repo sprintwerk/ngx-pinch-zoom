@@ -3,6 +3,7 @@ import { Component, ElementRef, HostBinding, Input, OnChanges, OnDestroy, OnInit
 import { Properties } from './interfaces';
 import { defaultProperties, backwardCompatibilityProperties } from './properties';
 import { IvyPinch } from './ivypinch';
+import {CommonModule} from "@angular/common";
 
 interface ComponentProperties extends Properties {
     disabled?: boolean;
@@ -22,6 +23,8 @@ export const _defaultComponentProperties: ComponentProperties = {
     exportAs: 'pinchZoom',
     templateUrl: './pinch-zoom.component.html',
     styleUrls: ['./pinch-zoom.component.sass'],
+    standalone: true,
+    imports: [CommonModule]
 })
 export class PinchZoomComponent implements OnInit, OnDestroy, OnChanges {
     private pinchZoom: IvyPinch;
