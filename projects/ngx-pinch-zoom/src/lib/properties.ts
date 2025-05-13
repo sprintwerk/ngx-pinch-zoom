@@ -13,6 +13,7 @@ export const defaultProperties: Properties = {
     wheel: true,
     wheelZoomFactor: 0.2,
     draggableImage: false,
+    draggableOnPinch: false,
 };
 
 export const backwardCompatibilityProperties = {

@@ -24,6 +24,8 @@ export class IvyPinch {
     private initialDistance: number = 0;
     public maxScale!: number;
     private defaultMaxScale: number = 3;
+    private initialPinchCenterX = 0;
+    private initialPinchCenterY = 0;
 
     // Minimum scale at which panning works
     get minPanScale(): number {
@@ -189,36 +191,82 @@ export class IvyPinch {
     private handlePinch = (event: TouchEvent): void => {
         event.preventDefault();
 
-        if (this.eventType === undefined || this.eventType === 'pinch') {
-            const touches = event.touches;
+        if (!this.properties.draggableOnPinch) {
+            if (this.eventType === undefined || this.eventType === 'pinch') {
+                const touches = event.touches;
 
-            if (!this.eventType) {
-                this.initialDistance = this.getDistance(touches);
+                if (!this.eventType) {
+                    this.initialDistance = this.getDistance(touches);
 
-                const moveLeft0 = this.moveLeft(event, 0);
-                const moveLeft1 = this.moveLeft(event, 1);
-                const moveTop0 = this.moveTop(event, 0);
-                const moveTop1 = this.moveTop(event, 1);
+                    const moveLeft0 = this.moveLeft(event, 0);
+                    const moveLeft1 = this.moveLeft(event, 1);
+                    const moveTop0 = this.moveTop(event, 0);
+                    const moveTop1 = this.moveTop(event, 1);
 
-                this.moveXC = (moveLeft0 + moveLeft1) / 2 - this.initialMoveX;
-                this.moveYC = (moveTop0 + moveTop1) / 2 - this.initialMoveY;
+                    this.moveXC = (moveLeft0 + moveLeft1) / 2 - this.initialMoveX;
+                    this.moveYC = (moveTop0 + moveTop1) / 2 - this.initialMoveY;
+                }
+
+                this.eventType = 'pinch';
+                this.distance = this.getDistance(touches);
+                this.scale = this.initialScale * (this.distance / this.initialDistance);
+                this.moveX = this.initialMoveX - ((this.distance / this.initialDistance) * this.moveXC - this.moveXC);
+                this.moveY = this.initialMoveY - ((this.distance / this.initialDistance) * this.moveYC - this.moveYC);
+
+                this.handleLimitZoom();
+
+                if (this.properties.limitPan) {
+                    this.limitPanY();
+                    this.limitPanX();
+                }
+
+                this.transformElement(0);
             }
 
-            this.eventType = 'pinch';
-            this.distance = this.getDistance(touches);
-            this.scale = this.initialScale * (this.distance / this.initialDistance);
-            this.moveX = this.initialMoveX - ((this.distance / this.initialDistance) * this.moveXC - this.moveXC);
-            this.moveY = this.initialMoveY - ((this.distance / this.initialDistance) * this.moveYC - this.moveYC);
-
-            this.handleLimitZoom();
-
-            if (this.properties.limitPan) {
-                this.limitPanY();
-                this.limitPanX();
-            }
-
-            this.transformElement(0);
+            return;
         }
+
+        const touches = event.touches;
+
+        if (!this.eventType) {
+            this.eventType = 'pinch';
+            this.initialDistance = this.getDistance(touches);
+            const lx0 = this.moveLeft(event, 0),
+                lx1 = this.moveLeft(event, 1),
+                ty0 = this.moveTop(event, 0),
+                ty1 = this.moveTop(event, 1);
+            this.initialPinchCenterX = (lx0 + lx1) / 2;
+            this.initialPinchCenterY = (ty0 + ty1) / 2;
+            this.moveXC = this.initialPinchCenterX - this.initialMoveX;
+            this.moveYC = this.initialPinchCenterY - this.initialMoveY;
+        }
+
+        this.eventType = 'pinch';
+        this.distance = this.getDistance(touches);
+        const scaleRatio = this.distance / this.initialDistance;
+        this.scale = this.initialScale * scaleRatio;
+
+        const curLX0 = this.moveLeft(event, 0),
+            curLX1 = this.moveLeft(event, 1),
+            curTY0 = this.moveTop(event, 0),
+            curTY1 = this.moveTop(event, 1);
+        const currentCenterX = (curLX0 + curLX1) / 2;
+        const currentCenterY = (curTY0 + curTY1) / 2;
+
+        const deltaX = currentCenterX - this.initialPinchCenterX;
+        const deltaY = currentCenterY - this.initialPinchCenterY;
+        const scaleTransX = (scaleRatio - 1) * this.moveXC;
+        const scaleTransY = (scaleRatio - 1) * this.moveYC;
+
+        this.moveX = this.initialMoveX + deltaX - scaleTransX;
+        this.moveY = this.initialMoveY + deltaY - scaleTransY;
+
+        this.handleLimitZoom();
+        if (this.properties.limitPan) {
+            this.limitPanY();
+            this.limitPanX();
+        }
+        this.transformElement(0);
     };
 
     private handleWheel = (event: WheelEvent): void => {
