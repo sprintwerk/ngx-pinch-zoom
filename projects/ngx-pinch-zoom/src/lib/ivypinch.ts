@@ -637,6 +637,10 @@ export class IvyPinch {
         return this.element.getElementsByTagName(this.elementTarget) as HTMLCollectionOf<HTMLElement>;
     }
 
+    public togglePan(): void {
+        this.properties.disablePan = !this.properties.disablePan;
+    }
+
     public toggleZoom(event: TouchEvent | boolean = false): void {
         if (this.initialScale === 1) {
             if (event && (event as TouchEvent).changedTouches) {

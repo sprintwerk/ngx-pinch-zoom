@@ -271,6 +271,10 @@ export class PinchZoomComponent implements OnInit, OnDestroy, OnChanges {
         this.properties = Object.assign({}, defaultProperties, properties);
     }
 
+    togglePan(): void {
+        return this.pinchZoom?.togglePan();
+    }
+
     toggleZoom(): void {
         this.pinchZoom?.toggleZoom();
     }
