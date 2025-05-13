@@ -667,6 +667,34 @@ export class IvyPinch {
         }
     }
 
+    public zoomIn(value: number): number {
+        const scale = this.scale + value;
+
+        if (scale >= this.maxScale) {
+            this.scale = this.maxScale;
+
+            return this.scale;
+        }
+
+        this.setZoom({ scale });
+
+        return this.scale;
+    }
+
+    public zoomOut(value: number): number {
+        const scale = this.scale - value;
+
+        if (scale <= this.properties.minScale) {
+            this.scale = this.properties.minScale;
+
+            return this.scale;
+        }
+
+        this.setZoom({ scale });
+
+        return this.scale;
+    }
+
     private setZoom(properties: { scale: number; center?: number[] }): void {
         this.scale = properties.scale;
 
