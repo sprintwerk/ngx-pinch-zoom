@@ -62,10 +62,12 @@ For use, put your image inside the &lt;pinch-zoom&gt; container. Please, pay att
 
 ## Methods
 
-| name         | description                                                                                  |
-| ------------ | -------------------------------------------------------------------------------------------- |
-| toggleZoom() | Image zooming in and out, depending on its current state.                                    |
-| destroy()    | Unsubscribe from mouse events and touches, as well as remove added styles from the DOM tree. |
+| name                   | description                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| toggleZoom()           | Image zooming in and out, depending on its current state.                                    |
+| zoomIn(value: number)  | Zoom in by `value`, respects `limit-zoom` option. Returns `scale: number`.                   |
+| zoomOut(value: number) | Zoom out by `value`, respects `minScale` option. Returns `scale: number`.                    |
+| destroy()              | Unsubscribe from mouse events and touches, as well as remove added styles from the DOM tree. |
 
 See the full documentation and examples on the [home page](http://ivylab.space/pinch-zoom).
 

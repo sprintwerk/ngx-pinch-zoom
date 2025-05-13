@@ -274,6 +274,14 @@ export class PinchZoomComponent implements OnInit, OnDestroy, OnChanges {
         this.pinchZoom?.toggleZoom();
     }
 
+    zoomIn(value: number): number {
+        return this.pinchZoom?.zoomIn(value);
+    }
+
+    zoomOut(value: number): number {
+        return this.pinchZoom?.zoomOut(value);
+    }
+
     isControl(): boolean {
         if (this.isDisabled) {
             return false;
