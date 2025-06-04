@@ -59,6 +59,14 @@ For use, put your image inside the &lt;pinch-zoom&gt; container. Please, pay att
 | draggableImage      | boolean                       | false                 | Sets the attribute `draggable` to the `<img>` tag.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | draggableOnPinch    | boolean                       | false                 | When set to `true` content can be moved around while touching or pinching with two fingers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
+## Outputs
+
+
+| name         | description                                    |
+| ------------ |------------------------------------------------|
+| zoomChanged | Emits current `scale: number` if it's changed. |
+
+
 ## Methods
 
 | name         | description                                                                                  |
