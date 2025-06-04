@@ -19,4 +19,5 @@ export interface Properties {
     autoHeight?: boolean;
     wheelZoomFactor?: number;
     draggableImage?: boolean;
+    draggableOnPinch?: boolean;
 }

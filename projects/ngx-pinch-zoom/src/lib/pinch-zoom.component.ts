@@ -3,7 +3,7 @@ import { Component, ElementRef, HostBinding, Input, OnChanges, OnDestroy, OnInit
 import { Properties } from './interfaces';
 import { defaultProperties, backwardCompatibilityProperties } from './properties';
 import { IvyPinch } from './ivypinch';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from "@angular/common";
 
 interface ComponentProperties extends Properties {
     disabled?: boolean;
@@ -145,6 +145,7 @@ export class PinchZoomComponent implements OnInit, OnDestroy, OnChanges {
     @Input() autoHeight!: boolean;
     @Input() wheelZoomFactor!: number;
     @Input() draggableImage!: boolean;
+    @Input() draggableOnPinch!: boolean;
 
     @HostBinding('style.overflow')
     get hostOverflow(): 'hidden' | 'visible' {
