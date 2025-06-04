@@ -1,16 +1,11 @@
 # Note
 
-This Project has been forked to update to the newest Angular 19 Version.
+This Project has been forked to update to the newest Angular 19 Version. 
 
 # Pinch zoom for Angular
 
-<img src="https://badgen.net/bundlephobia/min/ngx-pinch-zoom" />
-
 The module provides opportunities for image zooming in, zooming out and positioning with use of gestures on a touch screen.
 
-Live demos and source code samples can be found on [home page](http://ivylab.space/pinch-zoom).
-
-🔬️ Help make Pinch zoom better by [answering a few questions](https://docs.google.com/forms/d/e/1FAIpQLSfDW_yLcKTlRzhUy3PMAFMgmsmy9cNyeML8hQ8rOgM3PEIKGA/viewform?usp=sf_link).
 
 ## Installation
 
@@ -69,20 +64,11 @@ For use, put your image inside the &lt;pinch-zoom&gt; container. Please, pay att
 | name         | description                                                                                  |
 | ------------ | -------------------------------------------------------------------------------------------- |
 | toggleZoom() | Image zooming in and out, depending on its current state.                                    |
+| zoomIn(value: number)  | Zoom in by `value`, respects `limit-zoom` option. Returns `scale: number`.                   |
+| zoomOut(value: number) | Zoom out by `value`, respects `minScale` option. Returns `scale: number`.                    |
 | destroy()    | Unsubscribe from mouse events and touches, as well as remove added styles from the DOM tree. |
 
-See the full documentation and examples on the [home page](http://ivylab.space/pinch-zoom).
-
-## Author services
-
-Are you interested in this library but lacks features? [Write to the author](https://github.com/drozhzhin-n-e), he can do it for you.
 
 ## Contributor services
 
 Contact us over our Issue Tracker.
-
-## Sponsors
-
-Tested using Browserstack
-
-[![Browserstack](http://ivylab.space/assets/img/browserstack-logo.png)](http://browserstack.com/)
