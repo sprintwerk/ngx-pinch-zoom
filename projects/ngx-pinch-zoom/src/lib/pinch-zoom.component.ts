@@ -1,4 +1,14 @@
-import { Component, ElementRef, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit, Output,
+    SimpleChanges
+} from '@angular/core';
 
 import { Properties } from './interfaces';
 import { defaultProperties, backwardCompatibilityProperties } from './properties';
@@ -146,6 +156,7 @@ export class PinchZoomComponent implements OnInit, OnDestroy, OnChanges {
     @Input() wheelZoomFactor!: number;
     @Input() draggableImage!: boolean;
     @Input() draggableOnPinch!: boolean;
+    @Output() public zoomChanged: EventEmitter<number> = new EventEmitter<number>();
 
     @HostBinding('style.overflow')
     get hostOverflow(): 'hidden' | 'visible' {
@@ -235,7 +246,7 @@ export class PinchZoomComponent implements OnInit, OnDestroy, OnChanges {
 
         this._properties.limitZoom = this.limitZoom;
         this._properties.element = this.elementRef.nativeElement.querySelector('.pinch-zoom-content');
-        this.pinchZoom = new IvyPinch(this.properties);
+        this.pinchZoom = new IvyPinch(this.properties, this.zoomChanged);
     }
 
     private getProperties(

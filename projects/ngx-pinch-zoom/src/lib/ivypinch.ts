@@ -1,6 +1,7 @@
 import { EventType, Touches } from './touches';
 import { Properties } from './interfaces';
 import { defaultProperties } from './properties';
+import { EventEmitter } from "@angular/core";
 
 export class IvyPinch {
     private readonly properties: Properties = defaultProperties;
@@ -26,6 +27,7 @@ export class IvyPinch {
     private defaultMaxScale: number = 3;
     private initialPinchCenterX = 0;
     private initialPinchCenterY = 0;
+    private zoomChanged: EventEmitter<number>;
 
     // Minimum scale at which panning works
     get minPanScale(): number {
@@ -36,8 +38,9 @@ export class IvyPinch {
         return this.properties.fullImage;
     }
 
-    constructor(properties: Properties) {
+    constructor(properties: Properties, zoomChanged: EventEmitter<number>) {
         this.element = properties.element;
+        this.zoomChanged = zoomChanged;
 
         if (!this.element) {
             return;
@@ -111,11 +114,13 @@ export class IvyPinch {
             // Min scale
             if (this.scale < 1) {
                 this.scale = 1;
+                this.zoomChanged.emit(this.scale);
             }
 
             // Auto Zoom Out
             if (this.properties.autoZoomOut && this.eventType === 'pinch') {
                 this.scale = 1;
+                this.zoomChanged.emit(this.scale);
             }
 
             // Align image
@@ -210,6 +215,7 @@ export class IvyPinch {
                 this.eventType = 'pinch';
                 this.distance = this.getDistance(touches);
                 this.scale = this.initialScale * (this.distance / this.initialDistance);
+                this.zoomChanged.emit(this.scale);
                 this.moveX = this.initialMoveX - ((this.distance / this.initialDistance) * this.moveXC - this.moveXC);
                 this.moveY = this.initialMoveY - ((this.distance / this.initialDistance) * this.moveYC - this.moveYC);
 
@@ -245,6 +251,7 @@ export class IvyPinch {
         this.distance = this.getDistance(touches);
         const scaleRatio = this.distance / this.initialDistance;
         this.scale = this.initialScale * scaleRatio;
+        this.zoomChanged.emit(this.scale);
 
         const curLX0 = this.moveLeft(event, 0),
             curLX1 = this.moveLeft(event, 1),
@@ -293,6 +300,8 @@ export class IvyPinch {
 
         this.getElementPosition();
         this.scale = newScale;
+        this.zoomChanged.emit(this.scale);
+
 
         /* Get cursor position over image */
         const xCenter = event.clientX - this.elementPosition.left - this.initialMoveX;
@@ -322,10 +331,12 @@ export class IvyPinch {
 
             if (this.scale > limitZoom) {
                 this.scale = limitZoom;
+                this.zoomChanged.emit(this.scale);
             }
 
             if (this.scale <= minScale) {
                 this.scale = minScale;
+                this.zoomChanged.emit(this.scale);
             }
 
             const newImageWidth = imageWidth * this.scale;
@@ -514,6 +525,7 @@ export class IvyPinch {
 
     private resetScale(): void {
         this.scale = 1;
+        this.zoomChanged.emit(this.scale);
         this.moveX = 0;
         this.moveY = 0;
         this.updateInitialValues();
@@ -650,6 +662,7 @@ export class IvyPinch {
 
                 const changedTouches = (event as TouchEvent).changedTouches;
                 this.scale = this.initialScale * this.properties.doubleTapScale;
+                this.zoomChanged.emit(this.scale);
                 this.moveX =
                     this.initialMoveX -
                     (changedTouches[0].clientX - this.elementPosition.left) * (this.properties.doubleTapScale - 1);
@@ -659,6 +672,7 @@ export class IvyPinch {
             } else {
                 const zoomControlScale = this.properties.zoomControlScale || 0;
                 this.scale = this.initialScale * (zoomControlScale + 1);
+                this.zoomChanged.emit(this.scale);
                 this.moveX = this.initialMoveX - (this.element.offsetWidth * (this.scale - 1)) / 2;
                 this.moveY = this.initialMoveY - (this.element.offsetHeight * (this.scale - 1)) / 2;
             }
@@ -676,6 +690,7 @@ export class IvyPinch {
 
         if (scale >= this.maxScale) {
             this.scale = this.maxScale;
+            this.zoomChanged.emit(this.scale);
 
             return this.scale;
         }
@@ -690,6 +705,7 @@ export class IvyPinch {
 
         if (scale <= this.properties.minScale) {
             this.scale = this.properties.minScale;
+            this.zoomChanged.emit(this.scale);
 
             return this.scale;
         }
@@ -701,7 +717,7 @@ export class IvyPinch {
 
     private setZoom(properties: { scale: number; center?: number[] }): void {
         this.scale = properties.scale;
-
+        this.zoomChanged.emit(this.scale);
         let xCenter;
         let yCenter;
         const visibleAreaWidth = this.element.offsetWidth;

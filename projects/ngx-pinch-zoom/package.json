@@ -1,6 +1,6 @@
 {
   "name": "@meddv/ngx-pinch-zoom",
-  "version": "19.0.0",
+  "version": "19.0.2",
   "description": "Pinch zoom component for Angular 19.",
   "repository": {
     "type": "git",
