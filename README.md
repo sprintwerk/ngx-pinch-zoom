@@ -1,11 +1,10 @@
 # Note
 
-This Project has been forked to update to the newest Angular 19 Version.
+This Project has been forked to be updated to work with Angular versions 19 and 20.
 
 # Pinch zoom for Angular
 
 The module provides opportunities for image zooming in, zooming out and positioning with use of gestures on a touch screen.
-
 
 ## Installation
 
@@ -61,21 +60,18 @@ For use, put your image inside the &lt;pinch-zoom&gt; container. Please, pay att
 
 ## Outputs
 
-
-| name         | description                                    |
-| ------------ |------------------------------------------------|
+| name        | description                                    |
+| ----------- | ---------------------------------------------- |
 | zoomChanged | Emits current `scale: number` if it's changed. |
-
 
 ## Methods
 
-| name         | description                                                                                  |
-| ------------ | -------------------------------------------------------------------------------------------- |
-| toggleZoom() | Image zooming in and out, depending on its current state.                                    |
+| name                   | description                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| toggleZoom()           | Image zooming in and out, depending on its current state.                                    |
 | zoomIn(value: number)  | Zoom in by `value`, respects `limit-zoom` option. Returns `scale: number`.                   |
 | zoomOut(value: number) | Zoom out by `value`, respects `minScale` option. Returns `scale: number`.                    |
-| destroy()    | Unsubscribe from mouse events and touches, as well as remove added styles from the DOM tree. |
-
+| destroy()              | Unsubscribe from mouse events and touches, as well as remove added styles from the DOM tree. |
 
 ## Contributor services
 
