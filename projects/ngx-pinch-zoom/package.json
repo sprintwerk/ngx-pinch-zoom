@@ -1,7 +1,7 @@
 {
   "name": "@meddv/ngx-pinch-zoom",
-  "version": "19.0.2",
-  "description": "Pinch zoom component for Angular 19.",
+  "version": "20.0.0",
+  "description": "Pinch zoom component for Angular 20.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/medDV-GmbH/ngx-pinch-zoom"
@@ -26,6 +26,7 @@
   "keywords": [
     "Angular",
     "Angular 19",
+    "Angular 20",
     "ngx",
     "Pinch zoom",
     "Image zoom",
@@ -36,8 +37,8 @@
     "url": "https://github.com/medDV-GmbH/ngx-pinch-zoom/issues"
   },
   "peerDependencies": {
-      "@angular/common": "^19.0.0",
-      "@angular/core": "^19.0.0"
+      "@angular/common": ">=19.0.0",
+      "@angular/core": ">=19.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

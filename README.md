@@ -1,6 +1,6 @@
 # Note
 
-This Project has been forked to update to the newest Angular 19 Version.
+This Project has been forked to be updated to work with Angular versions 19 and 20.
 
 # Pinch zoom for Angular
 
